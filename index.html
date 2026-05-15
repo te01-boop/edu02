@@ -36,6 +36,26 @@
             -webkit-text-fill-color: transparent;
         }
     </style>
+    <script>
+        /**
+         * 로고 이미지 로드 실패 시 호출되는 함수입니다.
+         * 이미지 대신 텍스트 기반의 폴백 로고를 표시합니다.
+         */
+        function handleLogoError(img) {
+            img.style.display = 'none';
+            const fallback = document.getElementById('logo-fallback');
+            if (fallback) {
+                fallback.style.display = 'flex';
+            }
+        }
+
+        /**
+         * 질문하기 버튼 클릭 시 지정된 URL로 이동하는 함수입니다.
+         */
+        function goToQuestionPage() {
+            window.open("https://script.google.com/a/macros/ocean.ms.kr/s/AKfycbyJmAM1p-517AQAtS91XlLSVVHkZVVlXrTwh6kcLFkpUNi156MqW2w2XNKAO3yRWbPpiQ/exec", "_blank");
+        }
+    </script>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased selection:bg-ocean-200 selection:text-ocean-900">
 
@@ -45,13 +65,12 @@
             <div class="flex justify-between items-center h-20">
                 <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
                     <div class="relative flex items-center">
-                        <!-- 로고 이미지 경로 설정 및 에러 핸들링 -->
                         <img src="./images/logo.png" alt="오션정보교실 로고" 
                              class="h-14 w-auto object-contain transition-transform hover:scale-105" 
                              id="main-logo" 
                              onerror="handleLogoError(this)">
                         
-                        <!-- Fallback: 이미지가 없을 때만 표시되는 대체 요소 -->
+                        <!-- Fallback: 로고 이미지가 없을 경우 표시될 대체 UI -->
                         <div id="logo-fallback" style="display:none;" class="h-12 px-4 bg-gradient-to-br from-ocean-500 to-blue-600 rounded-lg items-center justify-center text-white font-bold text-lg shadow-sm">
                             OCEAN INFO
                         </div>
@@ -63,7 +82,7 @@
                     <a href="#about" class="text-gray-600 hover:text-ocean-600 font-medium transition">선생님 소개</a>
                     <a href="#class" class="text-gray-600 hover:text-ocean-600 font-medium transition">수업 안내</a>
                     <a href="#club" class="text-gray-600 hover:text-ocean-600 font-medium transition">코딩 동아리</a>
-                    <button onclick="alert('문의 페이지로 이동합니다.')" class="bg-ocean-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-ocean-700 shadow-sm transition">상담신청</button>
+                    <button onclick="alert('상담 신청 페이지 준비 중입니다.')" class="bg-ocean-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-ocean-700 shadow-sm transition">상담신청</button>
                 </div>
 
                 <!-- Mobile menu button -->
@@ -110,7 +129,8 @@
                     <a href="#club" class="w-full sm:w-auto inline-flex justify-center items-center px-8 py-3.5 border border-gray-200 text-base font-medium rounded-xl text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-300 shadow-sm transition-all duration-200">
                         동아리 가입안내
                     </a>
-                    <button onclick="alert('질문 게시판으로 이동합니다.')" class="w-full sm:w-auto inline-flex justify-center items-center px-8 py-3.5 border border-ocean-200 text-base font-medium rounded-xl text-ocean-700 bg-ocean-50 hover:bg-ocean-100 shadow-sm transition-all duration-200">
+                    <!-- 질문하기 버튼 URL 업데이트 -->
+                    <button onclick="goToQuestionPage()" class="w-full sm:w-auto inline-flex justify-center items-center px-8 py-3.5 border border-ocean-200 text-base font-medium rounded-xl text-ocean-700 bg-ocean-50 hover:bg-ocean-100 shadow-sm transition-all duration-200">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
                         질문하기
                     </button>
@@ -145,15 +165,7 @@
     </footer>
 
     <script>
-        // 로고 이미지 로딩 에러 처리 함수
-        function handleLogoError(img) {
-            img.style.display = 'none';
-            const fallback = document.getElementById('logo-fallback');
-            if (fallback) {
-                fallback.style.display = 'flex';
-            }
-        }
-
+        // 메뉴 및 내비게이션 인터랙션
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
         if(btn && menu) btn.addEventListener('click', () => menu.classList.toggle('hidden'));
@@ -164,10 +176,10 @@
                 if (window.scrollY > 20) {
                     navbar.classList.add('shadow-md', 'bg-white/95');
                     navbar.classList.remove('h-20');
-                    navbar.classList.add('h-16');
+                    navbar.classList.add('h-16', 'py-1');
                 } else {
                     navbar.classList.remove('shadow-md', 'bg-white/95');
-                    navbar.classList.remove('h-16');
+                    navbar.classList.remove('h-16', 'py-1');
                     navbar.classList.add('h-20');
                 }
             }
